@@ -20,14 +20,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-            <div class="x_title">
-                <h2>Bộ lọc</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li class="pull-right"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
+            @include('admin.template.x_title',['title'=>'Bộ lọc'])
             <div class="x_content">
                 <div class="row">
                     <div class="col-md-6"><a
@@ -91,77 +84,8 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-            <div class="x_title">
-                <h2>Danh sách</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li class="pull-right"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <div class="table-responsive">
-                    <table class="table table-striped jambo_table bulk_action">
-                        <thead>
-                        <tr class="headings">
-                            <th class="column-title">#</th>
-                            <th class="column-title">Slider Info</th>
-                            <th class="column-title">Trạng Thái</th>
-                            <th class="column-title">Tạo mới</th>
-                            <th class="column-title">Chỉnh sửa</th>
-                            <th class="column-title">Hành động</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @if (count($items) > 0)
-                            <tr class="even pointer">
-                                <td class="">1</td>
-                                <td width="10%">admin</td>
-                                <td>admin@gmail.com</td>
-                                <td>admin</td>
-                                <td width="5%"><img src="{{ asset('admin/img/img.jpg') }}"
-                                                    alt="admin" class="zvn-thumb"></td>
-                                <td><a href="/change-status-active/1"
-                                        type="button" class="btn btn-round btn-success">Active</a></td>
-                                <td width="10%">
-                                    <select name="select_change_attr" class="form-control"
-                                            data-url="/change-level-value_new/1">
-                                        <option value="admin" selected="selected">Admin</option>
-                                        <option value="member">Member</option>
-                                    </select>
-                                </td>
-                                <td>
-                                    <p><i class="fa fa-user"></i> admin</p>
-                                    <p><i class="fa fa-clock-o"></i> 10/12/2014</p>
-                                </td>
-                                <td>
-                                    <p><i class="fa fa-user"></i> hailan</p>
-                                    <p><i class="fa fa-clock-o"></i> 10/12/2014</p>
-                                </td>
-                                <td class="last">
-                                    <div class="zvn-box-btn-filter"><a
-                                            href="/form/1"
-                                            type="button" class="btn btn-icon btn-success" data-toggle="tooltip"
-                                            data-placement="top" data-original-title="Edit">
-                                        <i class="fa fa-pencil"></i>
-                                    </a><a href="/delete/1"
-                                            type="button" class="btn btn-icon btn-danger btn-delete"
-                                            data-toggle="tooltip" data-placement="top"
-                                            data-original-title="Delete">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                    </div>
-                                </td>
-                            </tr>
-                        @else
-                            <tr class="even pointer">
-                                <td colspan="6" class="text-center">Dữ liệu đang cập nhạt</td>
-                            </tr>
-                        @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            @include('admin.template.x_title',['title'=>'Danh sách'])
+            @include('admin.pages.slider.list')
         </div>
     </div>
 </div>
@@ -170,16 +94,7 @@
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="x_panel">
-            <div class="x_title">
-                <h2>Phân trang
-                </h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li class="pull-right"><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-
-                </ul>
-                <div class="clearfix"></div>
-            </div>
+            @include('admin.template.x_title',['title'=>'Phân trang'])
 
             <div class="x_content">
                 <div class="row">
