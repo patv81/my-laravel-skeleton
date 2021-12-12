@@ -10,13 +10,15 @@ class SliderController extends Controller
     private $pathViewController='admin.pages.slider.';
     private $controllerName='slider';
     private $model;
+    private $params=[];
     public function __construct(){
         $this->model = new MainModel();
+        $this->params['pagination']['totalItemPerPage'] = 1;
         view()->share('controllerName',$this->controllerName);
     }
 
     public function index(){ 
-        $items = $this->model->listItems(null,['task'=> 'admin-list-items' ]);
+        $items = $this->model->listItems($this->params,['task'=> 'admin-list-items' ]);
         return view($this->pathViewController.'index',['items'=>$items]);
     }
 }
