@@ -13,12 +13,18 @@ class SliderController extends Controller
     private $params=[];
     public function __construct(){
         $this->model = new MainModel();
-        $this->params['pagination']['totalItemPerPage'] = 1;
+        $this->params['pagination']['totalItemPerPage'] = 5;
         view()->share('controllerName',$this->controllerName);
     }
 
-    public function index(){ 
+    public function index(Request $request){ 
+        $this->params['filter']['status'] = $request->get('filter_status','all');
         $items = $this->model->listItems($this->params,['task'=> 'admin-list-items' ]);
-        return view($this->pathViewController.'index',['items'=>$items]);
+        $itemsStatusCount = $this->model->countItems($this->params,['task'=> 'admin-count-items-group-by-status']);
+        return view($this->pathViewController.'index',[
+            'items'=>$items,
+            'itemsStatusCount'=>$itemsStatusCount,
+            'params'=>$this->params,
+        ]);
     }
 }
