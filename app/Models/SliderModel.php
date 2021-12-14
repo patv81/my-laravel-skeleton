@@ -37,10 +37,20 @@ class SliderModel extends Model
     public function countItems($params,$options){
         $re= null;
         if ($options['task']=='admin-count-items-group-by-status'){
-            $re= SliderModel::select('status', DB::raw('count(*) as count'))
-                 ->groupBy('status')
-                // ->paginate($params['pagination']['totalItemPerPage'])->toArray();
-                ->get()->toArray();
+            $query= $this->select('status', DB::raw('count(*) as count'));
+            if ($params['search']['value']!==''){
+                if($params['search']['field']=='all'){
+                    $query->where(function($qr) use ($params){
+                        foreach($this->fieldSearchAccepted as $col){
+                            $qr->orwhere($col,'LIKE',"%{$params['search']['value']}%");
+                        }
+                    });
+                }else if (in_array($params['search']['field'],$this->fieldSearchAccepted)){
+                    $query->where($params['search']['field'],'LIKE',"%{$params['search']['value']}%");
+                }
+            }
+
+            $re=$query->groupBy('status')->get()->toArray();
         }
         return $re;
     }

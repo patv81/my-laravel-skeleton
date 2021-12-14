@@ -29,4 +29,20 @@ $(document).ready(function() {
             window.location.href=pathname+'?'+link+'search_field='+search_field+'&search_value='+search_value;
         }
     })
+
+    btnClear.click(function(e){
+        let pathname= window.location.pathname;
+        let params =['filter_status'];
+        let searchParams = new URLSearchParams(window.location.search);
+        let link ="";
+        $.each(params,function(key,param){
+            if(searchParams.has(param)){
+                link += param+'='+searchParams.get(param) +'&'
+            }
+        });
+        let search_value=inputSearchVallue.val();
+        let search_field = inputSearchFild.val();
+        window.location.href=pathname+'?'+link.slice(0,-1);
+
+    })
 });

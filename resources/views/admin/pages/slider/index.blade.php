@@ -4,7 +4,7 @@
 
 <?php 
 use App\Helpers\Template;
-$filterBtns = Template::showBtnFilter($controllerName,$itemsStatusCount,$params['filter']['status']);
+$filterBtns = Template::showBtnFilter($controllerName,$itemsStatusCount,$params['filter']['status'],$params['search']);
 $areaSearch = Template::showAreaSearch($controllerName,$params['search']);
 ?>
 @section('content')

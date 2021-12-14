@@ -37,7 +37,7 @@ class Template{
         return $xhtml;    
     }
 
-    public static function showBtnFilter($controllerName,$itemsStatusCount,$currentFilterStatus){
+    public static function showBtnFilter($controllerName,$itemsStatusCount,$currentFilterStatus,$paramSearch){
         $xhtml='';
         $tmplStatus=Config::get('myconf.template.status');
         if (count($itemsStatusCount)>0){
@@ -52,6 +52,9 @@ class Template{
 
                 $class = $currentFilterStatus == $statusValue ? 'btn-primary' : 'btn-info';
                 $link = route($controllerName).'?filter_status='.$statusValue;
+                if($paramSearch['value'] !==''){
+                    $link.='&search_field='.$paramSearch['field'].'&search_value='.$paramSearch['value'];
+                }
                 $xhtml.=sprintf('<a href="%s" type="button" class="btn %s">
                     %s <span class="badge bg-white">%s</span></a>',$link,$class,$currentStatus['name'],$item['count']);
             }
