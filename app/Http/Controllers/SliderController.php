@@ -19,6 +19,12 @@ class SliderController extends Controller
 
     public function index(Request $request){ 
         $this->params['filter']['status'] = $request->get('filter_status','all');
+        $this->params['search']['field'] = $request->get('search_field','all');
+        $this->params['search']['value'] = $request->get('search_value','');
+
+        echo '<pre>' ;
+        print_r($this->params); 
+        echo'</pre>';
         $items = $this->model->listItems($this->params,['task'=> 'admin-list-items' ]);
         $itemsStatusCount = $this->model->countItems($this->params,['task'=> 'admin-count-items-group-by-status']);
         return view($this->pathViewController.'index',[

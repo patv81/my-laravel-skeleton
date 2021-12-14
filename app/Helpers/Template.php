@@ -2,6 +2,41 @@
 namespace App\Helpers;
 use Config;
 class Template{
+    public static function showAreaSearch($controllerName,$paramSearch){
+        $tmplSearch = Config::get('myconf.template.search');
+        $fieldInController=Config::get('myconf.config.search');
+        $controllerName = array_key_exists($controllerName,$fieldInController) ? $controllerName : 'default';
+        $xhtmlField='';
+        foreach($fieldInController[$controllerName] as $field){
+            
+            $xhtmlField.= sprintf('<li><a href="#"
+                                    class="select-field" data-field="%s">%s</a></li>',$field,$tmplSearch[$field]['name']);
+        }
+
+        $searchField = in_array($paramSearch['field'],$fieldInController[$controllerName]) ? $paramSearch['field'] : 'all';
+        $xhtml=sprintf('<div class="input-group">
+                    <div class="input-group-btn">
+                        <button type="button"
+                                class="btn btn-default dropdown-toggle btn-active-field"
+                                data-toggle="dropdown" aria-expanded="false">
+                            %s <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                            %s
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control" name="search_value" value="%s">
+                    <span class="input-group-btn">
+                        <button id="btn-clear" type="button" class="btn btn-success"
+                            style="margin-right: 0px">Xóa tìm kiếm</button>
+                        <button id="btn-search" type="button" class="btn btn-primary">Tìm kiếm</button>
+                    </span>
+                <input type="hidden" name="search_field" value="%s">
+            </div>',$tmplSearch[$searchField]['name'],$xhtmlField,$paramSearch['value'],$searchField);
+        
+        return $xhtml;    
+    }
+
     public static function showBtnFilter($controllerName,$itemsStatusCount,$currentFilterStatus){
         $xhtml='';
         $tmplStatus=Config::get('myconf.template.status');
@@ -24,15 +59,7 @@ class Template{
     
         return $xhtml;    
     }
-            // <a href="?filter_status=all" type="button" class="btn btn-primary">
-            //     All <span class="badge bg-white">4</span>
-            // </a>
-            // <a href="?filter_status=active" type="button" class="btn btn-success">
-            //     Active <span class="badge bg-white">2</span>
-            // </a>
-            // <a href="?filter_status=inactive" type="button" class="btn btn-success">
-            //     Inactive <span class="badge bg-white">2</span>
-            // </a>
+
     public static function showItemHistory($by,$time){
         $xhtml = sprintf('   <p><i class="fa fa-user"></i> %s</p>
                             <p><i class="fa fa-clock-o"></i> %s </p>',$by, date(Config::get('myconf.format.long_time'),strtotime($time)));
@@ -58,20 +85,14 @@ class Template{
         // return "123";
     }
     public static function showItemAction($controllerName,$id){
-        $typeBtn=[
-            'delete'=>['class'=>'btn-danger btn-delete','icon'=>'fa-trash','title'=>'Delete','route-name'=>"$controllerName/delete"],
-            'edit'=>['class'=>'btn-success','icon'=>'fa-pencil','title'=>'Edit','route-name'=>"$controllerName/form"],
-        ];
-        $typeController =[
-            'slider'=>['delete','edit'],
-            'default'=>['delete','edit'],
-        ];
+        $typeBtn=Config::get('myconf.template.button');
+        $typeController =Config::get('myconf.config.button');
         $controllerName = array_key_exists($controllerName,$typeController) ? $controllerName :'default';
         $listBtn = $typeController[$controllerName];
         $xhtml='<div class="zvn-box-btn-filter">';
         foreach($listBtn as $btn){
             $currentBtn = $typeBtn[$btn];
-            $link = route($currentBtn['route-name'],['id'=>$id]);
+            $link = route($controllerName. $currentBtn['route-name'],['id'=>$id]);
             $xhtml.= sprintf('<a href="%s" type="button" class="btn btn-icon %s" data-toggle="tooltip"
                             data-placement="top" data-original-title="%s">
                             <i class="fa %s"></i>
@@ -80,17 +101,4 @@ class Template{
         $xhtml.= '</div>';
         return $xhtml;
     }
-
-// <div class="zvn-box-btn-filter"><a
-//         href="/form/1"
-//         type="button" class="btn btn-icon btn-success" data-toggle="tooltip"
-//         data-placement="top" data-original-title="Edit">
-//     <i class="fa fa-pencil"></i>
-// </a><a href="/delete/1"
-//         type="button" class="btn btn-icon btn-danger btn-delete"
-//         data-toggle="tooltip" data-placement="top"
-//         data-original-title="Delete">
-//     <i class="fa fa-trash"></i>
-// </a>
-// </div>
 }

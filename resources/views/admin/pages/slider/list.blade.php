@@ -39,7 +39,7 @@ use App\Helpers\Template;
                         $statusBtn = Template::showItemStatus($controllerName,$id,$status);
                     @endphp
                     <tr class="{{ $class }} pointer">
-                        <td class="">1</td>
+                        <td class="">{{ $index }}</td>
                         <td width="40%">
                             <p><strong>Name:</strong> {{ $name }}</p>
                             <p><strong>Description:</strong>{{ $description }}</p>
