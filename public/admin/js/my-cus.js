@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    $("#thongbao").fadeOut(3000);
+    //for hight light stuff
+    function hightLightShow(){
+        
+    }
+
     let btnSearch=$('button#btn-search');
     let btnClear = $('button#btn-clear');
     let inputSearchVallue= $('input[name=search_value]');

@@ -1,5 +1,7 @@
 @php 
 use App\Helpers\Template;
+use App\Helpers\Hightlight;
+
 @endphp
 <div class="x_content">
     <div class="table-responsive">
@@ -20,7 +22,7 @@ use App\Helpers\Template;
                     @php
                         $index= $key+1;
                         $id=$val['id'];
-                        $name =$val['name'];
+                        $name = $val['name'];
                         $email = $val['email'];
                         $description = $val['description'];
                         $link= $val['link'];

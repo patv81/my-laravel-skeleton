@@ -13,7 +13,7 @@ class SliderController extends Controller
     private $params=[];
     public function __construct(){
         $this->model = new MainModel();
-        $this->params['pagination']['totalItemPerPage'] = 1;
+        $this->params['pagination']['totalItemPerPage'] = 3;
         view()->share('controllerName',$this->controllerName);
     }
 
@@ -32,5 +32,12 @@ class SliderController extends Controller
             'itemsStatusCount'=>$itemsStatusCount,
             'params'=>$this->params,
         ]);
+        
+    }
+    public function status(Request $request){
+        $params["currentStatus"]=$request->status;
+        $params["id"] =$request->id;
+        $this->model->saveItem($params,['task'=>'change-status']);
+        return redirect()->route('slider')->with('zvn_notify','cập nhập thành công');
     }
 }

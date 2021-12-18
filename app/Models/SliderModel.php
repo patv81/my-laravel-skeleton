@@ -11,6 +11,7 @@ class SliderModel extends Model
     protected $fieldSearchAccepted=[
         'id','name','description','link'
     ];
+    const UPDATED_AT = 'modified';
     public function listItems($params,$options){
         $re= null;
         if ($options['task']=='admin-list-items'){
@@ -53,5 +54,12 @@ class SliderModel extends Model
             $re=$query->groupBy('status')->get()->toArray();
         }
         return $re;
+    }
+    public function saveItem($params,$options){
+        if($options['task']=='change-status'){
+            $status=$params['currentStatus']=='active'?'inactive':'active';
+            self::where('id', $params['id'])
+            ->update(['status' => $status]);
+        }
     }
 }
