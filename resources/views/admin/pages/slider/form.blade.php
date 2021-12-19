@@ -44,6 +44,7 @@ $inputName= Form::text('name', $item['name']??'',['class' => $inputClass]);
 ?>
 @section('content')
     @include('admin.template.page_header',['pageIndex'=>false])
+    @include('admin.template.error')
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">

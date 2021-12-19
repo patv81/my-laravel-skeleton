@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\SliderModel as MainModel;
+use App\Http\Requests\SliderRequest as MainRequest;
 class SliderController extends Controller
 {
     private $pathViewController='admin.pages.slider.';
@@ -50,5 +51,9 @@ class SliderController extends Controller
         return view($this->pathViewController.'form',[
             'item'=>$item??null
         ]);
+    }
+    public function save(MainRequest $request){
+        echo "ok";
+
     }
 }
