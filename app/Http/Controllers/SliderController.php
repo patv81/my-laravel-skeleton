@@ -22,9 +22,6 @@ class SliderController extends Controller
         $this->params['search']['field'] = $request->get('search_field','all');
         $this->params['search']['value'] = $request->get('search_value','');
 
-        echo '<pre>' ;
-        print_r($this->params); 
-        echo'</pre>';
         $items = $this->model->listItems($this->params,['task'=> 'admin-list-items' ]);
         $itemsStatusCount = $this->model->countItems($this->params,['task'=> 'admin-count-items-group-by-status']);
         return view($this->pathViewController.'index',[
@@ -39,5 +36,19 @@ class SliderController extends Controller
         $params["id"] =$request->id;
         $this->model->saveItem($params,['task'=>'change-status']);
         return redirect()->route('slider')->with('zvn_notify','cập nhập thành công');
+    }
+    public function delete(Request $request){
+        $params["id"] =$request->id;
+        $this->model->deleteItem($params,['task'=>'delete-item']);
+        return redirect()->route('slider')->with('zvn_notify','xóa phần tử '.$params['id'].' thành công');
+    }
+    public function form(Request $request){
+        if($request->id!=null){
+            $params['id']=$request->id;
+            $item =$this->model->getItem($params,['task'=>'get-item']);
+        }
+        return view($this->pathViewController.'form',[
+            'item'=>$item??null
+        ]);
     }
 }

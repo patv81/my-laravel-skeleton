@@ -35,6 +35,16 @@ class SliderModel extends Model
         }
         return $re;
     }
+    public function getItem($params,$options){
+        $result=null;
+        if ($options['task']=='get-item'){
+            $result=self::select('id','name','description','link','thumb','status')->where('id',$params['id'])
+            ->first()
+            ->toArray();
+        }
+        
+        return $result;
+    }
     public function countItems($params,$options){
         $re= null;
         if ($options['task']=='admin-count-items-group-by-status'){
@@ -60,6 +70,12 @@ class SliderModel extends Model
             $status=$params['currentStatus']=='active'?'inactive':'active';
             self::where('id', $params['id'])
             ->update(['status' => $status]);
+        }
+    }
+    public function deleteItem($params,$options){
+        if($options['task']=='delete-item'){
+            self::where('id', $params['id'])
+            ->delete();
         }
     }
 }

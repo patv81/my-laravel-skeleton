@@ -1,5 +1,10 @@
 $(document).ready(function() {
     $("#thongbao").fadeOut(3000);
+    $('.btn-delete').on('click', function(){
+        if(!confirm('Are you sure you want to delete')){
+            return false;
+        }
+    })
     //for hight light stuff
     function hightLightShow(){
         
