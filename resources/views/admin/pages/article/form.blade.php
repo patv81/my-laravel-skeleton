@@ -25,6 +25,10 @@ $elements=[
         'element' =>Form::select('status', $listStatus, $item['status']??'default',['class'=>$inputClass])
     ],
     [
+        'label' => Form::label('category_id', 'Category Id', ['class' => $labelClass]),
+        'element' =>Form::select('category_id', $itemsCategory, $item['category_id']??'default',['class'=>$inputClass])
+    ],
+    [
         'label' => Form::label('thumb', 'Thumb', ['class' => $labelClass]),
         'element' =>Form::file('thumb',['class'=>$inputClass]),
         'thumb'=>(!empty($item['id'])) ? Template::showItemThumb($controllerName, $item['thumb'],$item['name']) : null ,

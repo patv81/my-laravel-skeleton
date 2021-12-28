@@ -8,8 +8,9 @@ use App\Helpers\Hightlight;
             <thead>
             <tr class="headings">
                 <th class="column-title">#</th>
-                <th class="column-title">Slider Info</th>
+                <th class="column-title">Article Info</th>
                 <th class="column-title">Trạng Thái</th>
+                <th class="column-title">Danh mục</th>
                 <th class="column-title">Tạo mới</th>
                 <th class="column-title">Chỉnh sửa</th>
                 <th class="column-title">Hành động</th>
@@ -29,6 +30,7 @@ use App\Helpers\Hightlight;
                         $modified_by=$val['modified_by'];
                         $status= $val['status'];
                         $content = $val['content'];
+                        $category_name = $val['category_name'];
                         $actions = Template::showItemAction($controllerName,$id);
                         $createHistory = Template::showItemHistory($created_by,$created);
                         $modifiedHistory = Template::showItemHistory($modified_by,$modified);
@@ -42,6 +44,9 @@ use App\Helpers\Hightlight;
                             <p><strong>Name:</strong> {{ $name }}</p>
                             <p><strong>Content:</strong>{!! $content !!}</p>
                             {!! $thumb !!}
+                        </td>
+                        <td>
+                            {!! $category_name !!}
                         </td>
                         <td>
                             {!! $statusBtn !!}

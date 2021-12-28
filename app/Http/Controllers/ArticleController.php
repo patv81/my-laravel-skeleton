@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ArticleModel as MainModel;
+use App\Models\CategoryModel;
 use App\Http\Requests\ArticleRequest as MainRequest;
 class ArticleController extends Controller
 {
@@ -14,7 +15,7 @@ class ArticleController extends Controller
     private $params=[];
     public function __construct(){
         $this->model = new MainModel();
-        $this->params['pagination']['totalItemPerPage'] = 2;
+        $this->params['pagination']['totalItemPerPage'] = 5;
         view()->share('controllerName',$this->controllerName);
     }
 
@@ -24,6 +25,7 @@ class ArticleController extends Controller
         $this->params['search']['value'] = $request->get('search_value','');
 
         $items = $this->model->listItems($this->params,['task'=> 'admin-list-items' ]);
+
         $itemsStatusCount = $this->model->countItems($this->params,['task'=> 'admin-count-items-group-by-status']);
         return view($this->pathViewController.'index',[
             'items'=>$items,
@@ -48,8 +50,12 @@ class ArticleController extends Controller
             $params['id']=$request->id;
             $item =$this->model->getItem($params,['task'=>'get-item']);
         }
+        $categorymodel = new CategoryModel();
+        $itemsCategory = $categorymodel->listItems(null,['task'=>'admin-list-items-in-selectbox']);
+
         return view($this->pathViewController.'form',[
-            'item'=>$item??null
+            'item'=>$item??null,
+            'itemsCategory'=>$itemsCategory,
         ]);
     }
     public function save(MainRequest $request){
