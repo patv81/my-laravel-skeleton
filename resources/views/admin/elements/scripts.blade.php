@@ -14,3 +14,4 @@
 <script src="{{ asset('admin/js/custom.min.js') }}"></script>
 
 <script src="{{ asset('admin/js/my-cus.js') }}"></script>
+<script src="{{ asset('admin/js/ckeditor/ckeditor.js') }}"></script>

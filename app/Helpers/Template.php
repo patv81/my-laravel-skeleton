@@ -36,7 +36,9 @@ class Template{
         
         return $xhtml;    
     }
-
+    public static function showBtnDisplayFilter(){
+        
+    }
     public static function showBtnFilter($controllerName,$itemsStatusCount,$currentFilterStatus,$paramSearch){
         $xhtml='';
         $tmplStatus=Config::get('myconf.template.status');
@@ -59,7 +61,6 @@ class Template{
                     %s <span class="badge bg-white">%s</span></a>',$link,$class,$currentStatus['name'],$item['count']);
             }
         }
-    
         return $xhtml;    
     }
 
@@ -68,18 +69,36 @@ class Template{
                             <p><i class="fa fa-clock-o"></i> %s </p>',$by, date(Config::get('myconf.format.long_time'),strtotime($time)));
         return $xhtml;
     }
-    public static function showItemStatus($controllerName,$id,$status){
-        $link = route("$controllerName/status",['id'=>$id,'status'=>$status]);
+    public static function showItemStatus($controllerName,$id,$statusValue){
         $tmplStatus = Config::get('myconf.template.status');
-        // $tmplStatus=[
-        //     'active'    =>['class'  =>'btn-success',    'name'=>'Active'],
-        //     'inactive'  =>['class'  =>'btn-danger',     'name'=>'Inactive'],
-        // ];
-        $class = $tmplStatus[$status]['class']; 
-        $name = $tmplStatus[$status]['name'];
+        $statudValue= array_key_exists($statusValue,$tmplStatus)?$statusValue:'default';
+        $class = $tmplStatus[$statudValue]['class']; 
+        $name = $tmplStatus[$statudValue]['name'];
+        $link = route("$controllerName/status",['id'=>$id,'status'=>$statudValue]);
         $xhtml=sprintf('<a href="%s"
                         type="button" class="btn btn-round %s">%s</a>',$link,$class,$name); 
         return $xhtml;    
+    }
+    public static function showItemIsHome($controllerName,$id,$statusValue){
+        $tmplStatus = Config::get('myconf.template.is_home');
+        $statudValue= array_key_exists($statusValue,$tmplStatus)?$statusValue:'1';
+        $class = $tmplStatus[$statudValue]['class']; 
+        $name = $tmplStatus[$statudValue]['name'];
+        $link = route("$controllerName/isHome",['id'=>$id,'isHome'=>$statudValue]);
+        $xhtml=sprintf('<a href="%s"
+                        type="button" class="btn btn-round %s">%s</a>',$link,$class,$name); 
+        return $xhtml;    
+    }
+    public static function showItemSelect($controllerName,$id,$statusValue){
+        $link = route("$controllerName/display",['id'=>$id,'display'=>'current_temp_display']);
+        $tmplDisplay  =Config::get('myconf.template.display');
+        $xhtml = sprintf('<select name="select_change_attr" class="form-control"  data-url="%s" >',$link);
+        foreach ($tmplDisplay as $key=>$val){
+            $selected = $statusValue == $key ? ' selected="selected"' : '';
+            $xhtml.=sprintf('<option value="%s" %s>%s</option>',$key,$selected,$val);
+        }
+        $xhtml.='</select>';
+        return $xhtml;
     }
     public static function showItemThumb($controllerName,$thumbName,$alt)
     {

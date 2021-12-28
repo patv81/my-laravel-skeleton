@@ -2,13 +2,16 @@
 return [
     'url'=>[
         'prefixAdmin' => 'admin123',
-        'prefixNews' => 'news',
+        'prefixNews' => 'news321',
     ],
     'format'=>[
         'long_time' =>'H:m:s d/m/Y', 
         'short_time'=>'d/m/Y',
     ],
     'template'=>[
+        'form_ckeditor'=>[
+            'class'=>'form-control col-md-6 col-xs-12 ckeditor'
+        ],
         'form_input' => [
             'class'=>'form-control col-md-6 col-xs-12'
         ],
@@ -20,6 +23,14 @@ return [
             'all'=>['name'=>'Tất cả','class'=>'btn-success'],
             'active'=>['name'=>'Kích hoạt','class'=>'btn-success'],
             'inactive'=>['name'=>'Chưa kích hoạt','class'=>'btn-info']
+        ],
+        'is_home'=>[
+            '1'=>['name'=>'Hiển thị',                 'class'=>'btn-primary'],
+            '0'=> ['name'=>'Không hiển thị',           'class'=>'btn-warning'],
+        ],
+        'display'=>[
+            'list'=>'1 cột',
+            'grid'=>'2 cột'
         ],
         'search'=>[
             'all'           =>['name'=>'Search by All'],
@@ -41,11 +52,15 @@ return [
     'config'=>[
         'search'=>[
             'default'   =>['all','id'],
-            'slider'    =>['all','id','description','link','name']
+            'slider'    =>['all','id','description','link','name'],
+            'category'    =>['all','id'],
+            'article'    =>['all','name','content'],
         ],
         'button'=>[
             'slider'=>['delete','edit'],
             'default'=>['delete','edit'],
+            'category'=>['delete','edit'],
+            'article'=>['delete','edit'],
         ],
     ],
 ];

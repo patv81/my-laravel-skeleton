@@ -6,12 +6,12 @@ use App\Models\AdminModel;
 use DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-class SliderModel extends AdminModel
+class ArticleModel extends AdminModel
 {
     public function __construct(){
-        $this->table = 'slider';
-        $this->folderUpload = 'slider';
-        $this->fieldSearchAccepted=['id','name','description','link'];
+        $this->table = 'article';
+        $this->folderUpload = 'article';
+        $this->fieldSearchAccepted=['id','name','content'];
         $this->crudNotAccepted=['_token','thumb_current'];
         
     }
@@ -21,7 +21,7 @@ class SliderModel extends AdminModel
     public function listItems($params,$options){
         $re= null;
         if ($options['task']=='admin-list-items'){
-            $query= $this->select('id','name','description','link','thumb','created','created_by','modified','modified_by','status');
+            $query= $this->select('id','name','content','thumb','created','created_by','modified','modified_by','status');
                 
             if( $params['filter']['status']!=='all'){
                 $query->where('status','=',$params['filter']['status']);
@@ -37,10 +37,10 @@ class SliderModel extends AdminModel
                     $query->where($params['search']['field'],'LIKE',"%{$params['search']['value']}%");
                 }
             }
-            $re=$query->orderBy('id')->paginate($params['pagination']['totalItemPerPage']);
+            $re=$query->orderBy('id','DESC')->paginate($params['pagination']['totalItemPerPage']);
         }
         if ($options['task']=='news-list-items'){
-            $query = $this->select('id','name','description','link','thumb','created','created_by','modified','modified_by','status')
+            $query = $this->select('id','name','content','thumb','created','created_by','modified','modified_by','status')
                     ->where('status','=','active')
                     ->limit(5);
             $re = $query->get()->toArray();
@@ -51,7 +51,7 @@ class SliderModel extends AdminModel
     public function getItem($params,$options){
         $result=null;
         if ($options['task']=='get-item'){
-            $result=self::select('id','name','description','link','thumb','status')->where('id',$params['id'])
+            $result=self::select('id','name','content','thumb','status')->where('id',$params['id'])
             ->first()
             ->toArray();
         }

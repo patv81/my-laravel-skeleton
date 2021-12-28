@@ -16,7 +16,9 @@ Route::get('/', function () {
 });
 
 $prefixAdmin = config('myconf.url.prefixAdmin');
+$prefixNews = config('myconf.url.prefixNews');
 Route::group(['prefix' => $prefixAdmin], function() {
+    //====================================== DASHBOARD ========================================
     $prefix = 'dashboard';
     $controllerName = 'dashboard';
     Route::group(['prefix' => $prefix], function() use ($controllerName) {
@@ -25,6 +27,7 @@ Route::group(['prefix' => $prefixAdmin], function() {
 
     });
 
+    //====================================== SLIDER ===========================================
     $prefix = 'slider';
     $controllerName = 'slider';
     Route::group(['prefix' => $prefix], function () use ($controllerName) {
@@ -34,5 +37,40 @@ Route::group(['prefix' => $prefixAdmin], function() {
         Route::get('form/{id?}',                        ['as' =>        $controllerName.'/form',                 'uses' => $controller . 'form']);
         Route::get('delete/{id}',                       ['as' =>        $controllerName.'/delete',               'uses' => $controller . 'delete']);
         Route::get('change-status-{status}/{id}',       ['as' =>        $controllerName.'/status',               'uses' => $controller . 'status'])->where('id','[0-9]+');
+    });
+    //====================================== CATEGORY ===========================================
+    $prefix = 'category';
+    $controllerName = 'category';
+    Route::group(['prefix' => $prefix], function () use ($controllerName) {
+        $controller = ucfirst($controllerName) . 'Controller@';
+        Route::get('/',                                 ['as' =>        $controllerName,                         'uses' => $controller . 'index']);
+        Route::post('save',                             ['as' =>        $controllerName.'/save',                 'uses' => $controller . 'save']);
+        Route::get('form/{id?}',                        ['as' =>        $controllerName.'/form',                 'uses' => $controller . 'form']);
+        Route::get('delete/{id}',                       ['as' =>        $controllerName.'/delete',               'uses' => $controller . 'delete']);
+        Route::get('change-status-{status}/{id}',       ['as' =>        $controllerName.'/status',               'uses' => $controller . 'status'])->where('id','[0-9]+');
+        Route::get('change-is-home-{isHome}/{id}',      ['as' =>        $controllerName.'/isHome',               'uses' => $controller . 'isHome'])->where('id','[0-9]+');
+        Route::get('change-display-{display}/{id}',     ['as' =>        $controllerName.'/display',               'uses' => $controller . 'display'])->where('id','[0-9]+');
+    });
+    //====================================== CATEGORY ===========================================
+    $prefix = 'article';
+    $controllerName = 'article';
+    Route::group(['prefix' => $prefix], function () use ($controllerName) {
+        $controller = ucfirst($controllerName) . 'Controller@';
+        Route::get('/',                                 ['as' =>        $controllerName,                         'uses' => $controller . 'index']);
+        Route::post('save',                             ['as' =>        $controllerName.'/save',                 'uses' => $controller . 'save']);
+        Route::get('form/{id?}',                        ['as' =>        $controllerName.'/form',                 'uses' => $controller . 'form']);
+        Route::get('delete/{id}',                       ['as' =>        $controllerName.'/delete',               'uses' => $controller . 'delete']);
+        Route::get('change-status-{status}/{id}',       ['as' =>        $controllerName.'/status',               'uses' => $controller . 'status'])->where('id','[0-9]+');
+    });
+});
+
+
+Route::group(['prefix' => $prefixNews], function() {    
+    $prefix = '';
+    $controllerName = 'home';
+    Route::group(['prefix' => $prefix], function() use ($controllerName) {
+        $controller = ucfirst($controllerName). 'Controller@';
+        Route::get('/',                    ['as' =>        $controllerName,                         'uses'=> $controller.'index']);
+
     });
 });

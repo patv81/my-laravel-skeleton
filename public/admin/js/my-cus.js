@@ -1,3 +1,4 @@
+var test;
 $(document).ready(function() {
     $("#thongbao").fadeOut(3000);
     $('.btn-delete').on('click', function(){
@@ -14,6 +15,7 @@ $(document).ready(function() {
     let btnClear = $('button#btn-clear');
     let inputSearchVallue= $('input[name=search_value]');
     let inputSearchFild= $('input[name=search_field]');
+    let selectDisplay = $('select[name=select_change_attr]');
     $('a.select-field').click(function(e){
         e.preventDefault();
         let field = $(this).data('field');
@@ -21,7 +23,13 @@ $(document).ready(function() {
         $('button.btn-active-field').html(fieldName+'<span class="caret"></span>');
         inputSearchFild.val(field);
     });
-
+    selectDisplay.on('change', function(e){
+        let selectValue =$(this).val();
+        let url = $(this).data('url');
+        url = url.replace('current_temp_display',selectValue);
+        window.location.href = url;
+        
+    })
     btnSearch.click(function(e){
         let pathname= window.location.pathname;
         let params =['filter_status'];
