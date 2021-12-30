@@ -29,8 +29,12 @@ return [
             '0'=> ['name'=>'Không hiển thị',           'class'=>'btn-warning'],
         ],
         'display'=>[
-            'list'=>'1 cột',
-            'grid'=>'2 cột'
+            'list'=>['name'=>'1 cột'],
+            'grid'=>['name'=>'2 cột'],
+        ],
+        'type'=>[
+            'feature'=>['name'=>'nổi bật'],
+            'normal'=>['name'=>'bình thường'],
         ],
         'search'=>[
             'all'           =>['name'=>'Search by All'],

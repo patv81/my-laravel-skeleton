@@ -9,10 +9,9 @@ use App\Helpers\Hightlight;
             <tr class="headings">
                 <th class="column-title">#</th>
                 <th class="column-title">Article Info</th>
-                <th class="column-title">Trạng Thái</th>
                 <th class="column-title">Danh mục</th>
-                <th class="column-title">Tạo mới</th>
-                <th class="column-title">Chỉnh sửa</th>
+                <th class="column-title">Kiểu bài viết</th>
+                <th class="column-title">Trạng Thái</th>
                 <th class="column-title">Hành động</th>
             </tr>
             </thead>
@@ -32,11 +31,10 @@ use App\Helpers\Hightlight;
                         $content = $val['content'];
                         $category_name = $val['category_name'];
                         $actions = Template::showItemAction($controllerName,$id);
-                        $createHistory = Template::showItemHistory($created_by,$created);
-                        $modifiedHistory = Template::showItemHistory($modified_by,$modified);
                         $thumb=Template::showItemThumb($controllerName,$val['thumb'],$name);
                         $class = $index %2 ==0 ? 'even' :'odd';
                         $statusBtn = Template::showItemStatus($controllerName,$id,$status);
+                        $type = Template::showItemSelect($controllerName,$id,$val['type'],'type');
                     @endphp
                     <tr class="{{ $class }} pointer">
                         <td class="">{{ $index }}</td>
@@ -45,20 +43,10 @@ use App\Helpers\Hightlight;
                             <p><strong>Content:</strong>{!! $content !!}</p>
                             {!! $thumb !!}
                         </td>
-                        <td>
-                            {!! $category_name !!}
-                        </td>
-                        <td>
-                            {!! $statusBtn !!}
-                        </td>
-                        <td>
-                            {!! $createHistory !!}
-                        </td>
-                        <td>
-                            {!! $modifiedHistory !!}
-                        </td>
+                        <td>{!! $category_name !!}</td>
+                        <td>{!! $type !!}</td>
+                        <td>{!! $statusBtn !!}</td>
                         <td class="last">
-                            
                             {!! $actions !!}
                         </td>
                     </tr>

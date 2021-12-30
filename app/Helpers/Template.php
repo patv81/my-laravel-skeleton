@@ -89,13 +89,14 @@ class Template{
                         type="button" class="btn btn-round %s">%s</a>',$link,$class,$name); 
         return $xhtml;    
     }
-    public static function showItemSelect($controllerName,$id,$statusValue){
-        $link = route("$controllerName/display",['id'=>$id,'display'=>'current_temp_display']);
-        $tmplDisplay  =Config::get('myconf.template.display');
+    public static function showItemSelect($controllerName,$id,$statusValue,$fieldName='display'){
+        $link = route("$controllerName/$fieldName",['id'=>$id,$fieldName=>'current_temp_display']);
+        
+        $tmplDisplay  =Config::get('myconf.template.'.$fieldName);
         $xhtml = sprintf('<select name="select_change_attr" class="form-control"  data-url="%s" >',$link);
         foreach ($tmplDisplay as $key=>$val){
-            $selected = $statusValue == $key ? ' selected="selected"' : '';
-            $xhtml.=sprintf('<option value="%s" %s>%s</option>',$key,$selected,$val);
+            $selected = ($statusValue == $key) ? ' selected="selected"' : '';
+            $xhtml.=sprintf('<option value="%s" %s>%s</option>',$key,$selected,$val['name']);
         }
         $xhtml.='</select>';
         return $xhtml;
@@ -122,5 +123,16 @@ class Template{
         }
         $xhtml.= '</div>';
         return $xhtml;
+    }
+
+    //
+    public static function showDatetimeFrontend($input){
+
+        return date(config('myconf.format.short_time'),strtotime($input));
+    }
+    public static function showContent($input,$length,$postfix='...'){
+        $postfix = ($length == 0 )? '' : $postfix;
+        $input = str_replace(['<p>','</p>'],'',$input);
+        return preg_replace('/\s+?(\S+)?$/','',substr($input,0,$length)). $postfix;
     }
 }

@@ -21,7 +21,7 @@ class ArticleModel extends AdminModel
     public function listItems($params,$options){
         $re= null;
         if ($options['task']=='admin-list-items'){
-            $query= $this->select('a.id','a.name','a.content','a.thumb','a.created','a.created_by','a.modified','a.modified_by','a.status','c.name as category_name')
+            $query= $this->select('a.type','a.id','a.name','a.content','a.thumb','a.created','a.created_by','a.modified','a.modified_by','a.status','c.name as category_name')
                         ->join('category as c','a.category_id','=','c.id');
                 
             if( $params['filter']['status']!=='all'){
@@ -46,7 +46,15 @@ class ArticleModel extends AdminModel
                     ->limit(5);
             $re = $query->get()->toArray();
         }
-        
+        if ($options['task']=='news-list-items-featured'){
+            $query = $this->select('a.type','a.id','a.name','a.content','a.thumb','a.created','a.created_by','a.modified','a.modified_by','a.status','c.name as category_name')
+                            ->join('category as c','a.category_id','=','c.id')
+                            ->where('a.status','=','active')
+                            ->where('a.type','=','feature')
+                            ->orderBy('a.id','desc')
+                            ->take(3);
+            $re = $query->get()->toArray();
+        }
         return $re;
     }
     public function getItem($params,$options){
@@ -105,6 +113,10 @@ class ArticleModel extends AdminModel
             $params['created_by']= 'phamhoa';
             $params['thumb']= $this->uploadThumb($params['thumb']);
             self::insert($this->prepareParams($params));
+        }
+        if ($options['task']=='change-type'){
+            self::where('id',$params['id'])
+            ->update(['type'=>$params['currentType']]);
         }
     }
     public function deleteItem($params,$options){

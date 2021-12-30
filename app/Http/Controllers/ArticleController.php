@@ -34,6 +34,12 @@ class ArticleController extends Controller
         ]);
         
     }
+    public function type(Request $request){
+        $params['currentType'] = $request->type;
+        $params['id']=$request->id;
+        $this->model->saveItem($params,['task'=>'change-type']);
+        return redirect()->route('article')->with('zvn_notify','cập nhập kiểu bài viết thành công');
+    }
     public function status(Request $request){
         $params["currentStatus"]=$request->status;
         $params["id"] =$request->id;
