@@ -57,12 +57,18 @@ class CategoryModel extends AdminModel
         return $re;
     }
     public function getItem($params,$options){
+        
         $result=null;
         if ($options['task']=='get-item'){
             $result=self::select('id','name','display','is_home','status')->where('id',$params['id'])
-            ->first()
-            ->toArray();
+            ->first();
         }
+        if ($options['task']=='news-get-item'){
+            $result=self::select('id','name','display')->where('id',$params['category_id'])
+            ->first();
+            
+        }
+        if ($result) $result->toArray();
         return $result;
 
     }

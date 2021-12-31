@@ -2,14 +2,12 @@
 @extends('admin.main')
 
 
-<?php 
-        echo '<pre>' ;
-        print_r($params); 
-        echo'</pre>';
+@php
+
 use App\Helpers\Template;
 $filterStatusBtns = Template::showBtnFilter($controllerName,$itemsStatusCount,$params['filter']['status'],$params['search']);
 $areaSearch = Template::showAreaSearch($controllerName,$params['search']);
-?>
+@endphp
 @section('content')
     @include('admin.template.page_header',['pageIndex'=>true])
     @include('admin.template.zvn_notify')

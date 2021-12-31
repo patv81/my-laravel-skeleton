@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\News;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -24,12 +24,17 @@ class HomeController extends Controller
         $itemsSlider = $slidermodel->listItems(null,['task'=>'news-list-items']);
         $itemsCategory = $categorymodel->listItems(null,['task'=>'news-list-items-is-home']);
         $itemsFeatured = $articlemodel->listItems(null,['task'=>'news-list-items-featured']);
-
+        $itemsLatest = $articlemodel->listItems(null,['task'=>'news-list-items-latest']);
+        foreach ($itemsCategory as $key=>$val){
+            $itemsCategory[$key]['articles'] = $articlemodel->listItems(['id'=>$val['id']],['task'=>'news-list-items-in-category']);
+        }
+        
         return view($this->pathViewController.'index',[
             'params'=>$this->params,
             'itemsSlider'=>$itemsSlider,
             'itemsCategory' =>$itemsCategory,
             'itemsFeatured' =>$itemsFeatured,
+            'itemsLatest' =>$itemsLatest,
         ]);
         
     }

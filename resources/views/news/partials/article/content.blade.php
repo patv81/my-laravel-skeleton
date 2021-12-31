@@ -1,17 +1,21 @@
 @php
     use App\Helpers\Template;
-    $category_name = $item['category_name'];
+    use App\Helpers\URL;
     $name = $item['name'];
-    $linkCategory='#';
+    if($showCategory){
+        $linkCategory=URL::linkCategory($item['category_id'],$item['category_name']);
+    }
     $linkArticle = '#';
     $author = 'patv';
     $created = Template::showDatetimeFrontend($item['created']);
     $content = Template::showContent($item['content'],$lengthContent);
 @endphp
 <div class="post_content">
-    <div class="post_category cat_technology ">
-        <a href="{{ $linkCategory }}">{{ $category_name }}</a>
-    </div>
+    @if ($showCategory)
+        <div class="post_category cat_technology ">
+            <a href="{{ $linkCategory }}">{{ $item['category_name'] }}</a>
+        </div>
+    @endif
     <div class="post_title"><a
             href="{{ $linkArticle }}">
         {{ $name }}</a></div>

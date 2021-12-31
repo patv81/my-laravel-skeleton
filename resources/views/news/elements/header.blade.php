@@ -1,15 +1,21 @@
 @php
     use App\Models\CategoryModel as CategoryModel;
+    use Illuminate\Support\Str;
+    use App\Helpers\URL;
     $category = new CategoryModel();
     $itemsCategory = $category->listItems(null,['task'=>'news-category-list-items']);
     $xhtml='';
     $xhtmlMobile='';
+
     if(count($itemsCategory)>0){
+        $currentCategory = route::input('category_id');
         $xhtml.='<nav class="main_nav"><ul class="main_nav_list d-flex flex-row align-items-center justify-content-start">';
         $xhtmlMobile.='<nav class="menu_nav"><ul class="menu_mm">';
-            foreach($itemsCategory as $key=>$val){
-                $xhtml.=sprintf('<li><a href="index.html">%s</a></li>',$val['name']);
-                $xhtmlMobile.=sprintf('<li class="menu_mm"><a href="index.html">%s</a></li>',$val['name']);
+            foreach($itemsCategory as $key=>$val){                
+                $active=($currentCategory == $val['id']) ? 'class="active"' : '';
+                $link = URL::linkCategory($val['id'],$val['name']);
+                $xhtml.=sprintf('<li %s><a href="%s">%s</a></li>',$active,$link,$val['name']);
+                $xhtmlMobile.=sprintf('<li %s class="menu_mm"><a href="%s">%s</a></li>',$active,$link,$val['name']);
             }
         $xhtml.='</ul></nav>';
         $xhtmlMobile.='</ul></nav>';
@@ -26,7 +32,7 @@
                 <div class="col">
                     <div class="header_content d-flex flex-row align-items-center justfy-content-start">
                         <div class="logo_container">
-                            <a href="#">
+                            <a href="{{ route('home') }}">
                                 <div class="logo"><span>ZEND</span>VN</div>
                             </a>
                         </div>

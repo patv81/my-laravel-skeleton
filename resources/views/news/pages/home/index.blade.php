@@ -21,7 +21,7 @@
             <div class="col-lg-3">
                 <div class="sidebar">
                     <!-- Latest Posts -->
-                    @include('news.block.lasted_post')
+                    @include('news.block.lasted_post',['items'=>$itemsLatest])
                     <!-- Advertisement -->
                     <!-- Extra -->
                     @include('news.block.advertisement')

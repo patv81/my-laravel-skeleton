@@ -21,7 +21,7 @@ class ArticleModel extends AdminModel
     public function listItems($params,$options){
         $re= null;
         if ($options['task']=='admin-list-items'){
-            $query= $this->select('a.type','a.id','a.name','a.content','a.thumb','a.created','a.created_by','a.modified','a.modified_by','a.status','c.name as category_name')
+            $query= $this->select('a.type','a.category_id','a.id','a.name','a.content','a.thumb','a.created','a.created_by','a.modified','a.modified_by','a.status','c.name as category_name')
                         ->join('category as c','a.category_id','=','c.id');
                 
             if( $params['filter']['status']!=='all'){
@@ -41,18 +41,35 @@ class ArticleModel extends AdminModel
             $re=$query->orderBy('a.id','DESC')->paginate($params['pagination']['totalItemPerPage']);
         }
         if ($options['task']=='news-list-items'){
-            $query = $this->select('id','name','content','thumb','created','created_by','modified','modified_by','status')
+            $query = $this->select('id','name','content','thumb','a.category_id','created','created_by','modified','modified_by','status')
                     ->where('status','=','active')
                     ->limit(5);
             $re = $query->get()->toArray();
         }
         if ($options['task']=='news-list-items-featured'){
-            $query = $this->select('a.type','a.id','a.name','a.content','a.thumb','a.created','a.created_by','a.modified','a.modified_by','a.status','c.name as category_name')
+            $query = $this->select('a.type','a.id','a.name','a.content','a.thumb','a.created','a.category_id','a.created_by','a.modified','a.modified_by','a.status','c.name as category_name')
                             ->join('category as c','a.category_id','=','c.id')
                             ->where('a.status','=','active')
                             ->where('a.type','=','feature')
                             ->orderBy('a.id','desc')
                             ->take(3);
+            $re = $query->get()->toArray();
+        }
+        if ($options['task']=='news-list-items-latest'){
+            $query = $this->select('a.type','a.id','a.name','a.thumb','a.created','a.category_id','a.created_by','a.category_id','a.modified','a.modified_by','a.status','c.name as category_name')
+                            ->join('category as c','a.category_id','=','c.id')
+                            ->where('a.status','=','active')
+                            ->orderBy('a.id','desc')
+                            ->take(4);
+            $re = $query->get()->toArray();
+        }
+        if ($options['task']=='news-list-items-in-category'){
+        
+            $query = $this->select('a.content','a.category_id','a.id','a.name','a.thumb','a.created','a.created_by')
+                            ->where('a.status','=','active')
+                            ->where('a.category_id','=',$params['id'])
+                            ->orderBy('a.id','desc')
+                            ->take(4);
             $re = $query->get()->toArray();
         }
         return $re;
@@ -65,7 +82,7 @@ class ArticleModel extends AdminModel
             ->toArray();
         }
         if ($options['task']=='get-thumb'){
-            $result=self::select('id','thumb')->where('id',$params['id'])
+            $result=self::select('id','thumb','a.category_id')->where('id',$params['id'])
             ->first()
             ->toArray();
         }
