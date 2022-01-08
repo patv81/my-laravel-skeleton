@@ -32,6 +32,10 @@ return [
             'list'=>['name'=>'1 cột'],
             'grid'=>['name'=>'2 cột'],
         ],
+        'level'=>[
+            'admin'=>['name'=>'quản trị viên'],
+            'member'=>['name'=>'thành viên'],
+        ],
         'type'=>[
             'feature'=>['name'=>'nổi bật'],
             'normal'=>['name'=>'bình thường'],
@@ -46,6 +50,7 @@ return [
             'description'   =>['name'=>'Search by Description'],
             'link'          =>['name'=>'Search by Link'],
             'content'       =>['name'=>'Search by Content'],
+            'level'       => ['name' => 'Search by Level'],
             
         ],
         'button'=>[
@@ -59,12 +64,14 @@ return [
             'slider'    =>['all','id','description','link','name'],
             'category'    =>['all','id'],
             'article'    =>['all','name','content'],
+            'user'    => ['all', 'username', 'email','level','fullname'],
         ],
         'button'=>[
             'slider'=>['delete','edit'],
             'default'=>['delete','edit'],
             'category'=>['delete','edit'],
             'article'=>['delete','edit'],
+            'user' => ['delete', 'edit'],
         ],
     ],
 ];

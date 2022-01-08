@@ -13,7 +13,7 @@
                 $category_name = $item['category_name'];
                 $name = $item['name'];
                 $linkCategory=URL::linkCategory($item['category_id'],$item['category_name']);
-                $linkArticle = '#';
+                $linkArticle = URL::linkArticle($item['id'],$item['name']);
                 $author = 'patv';
                 $created = Template::showDatetimeFrontend($item['created']);
             @endphp
@@ -29,7 +29,7 @@
                     <div class="latest_post_title"><a
                             href="{{ $linkArticle }}"> 
                         {{ $name }}</a></div>
-                    <div class="latest_post_date">$created</div>
+                    <div class="latest_post_date">{{ $created }}</div>
                 </div>
             </div>
         @endforeach

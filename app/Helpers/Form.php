@@ -44,6 +44,19 @@ class Form{
                         </div>
                     </div>',$element['label'],$element['element'],$element['thumb']);
                 break;
+            case 'avatar':
+                $xhtml .= sprintf(
+                    '<div class="form-group">
+                        %s
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            %s
+                            <p style="margin-top: 50px;">
+                            %s
+                            </p>
+                        </div>
+                    </div>',$element['label'],$element['element'],$element['avatar']
+                );
+                break;
         }
         return $xhtml;
     }
