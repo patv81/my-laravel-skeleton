@@ -44,7 +44,7 @@ class UserModel extends AdminModel
     public function getItem($params,$options){
         $result=null;
         if ($options['task']=='get-item'){
-            $result=self::select('id', 'username', 'email', 'fullname', 'password', 'avatar', 'level', 'created', 'created_by', 'modified', 'modified_by', 'status')->where('id',$params['id'])
+            $result=self::select('id', 'username', 'email', 'fullname', 'avatar', 'level', 'created', 'created_by', 'modified', 'modified_by', 'status')->where('id',$params['id'])
             ->first()
             ->toArray();
         }
@@ -52,6 +52,16 @@ class UserModel extends AdminModel
             $result=self::select('id','avatar')->where('id',$params['id'])
             ->first()
             ->toArray();
+        }
+        if ($options['task'] == 'auth-login') {
+            $result = self::select('username', 'email', 'avatar', 'level', 'status')
+                ->where('status','active')
+                ->where('email',$params['email'])
+                ->where('password', md5($params['password']))
+                ->first();
+            if($result) {
+                $result=$result->toArray();
+            }
         }
         return $result;
 

@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 $prefixAdmin = config('myconf.url.prefixAdmin');
 $prefixNews = config('myconf.url.prefixNews');
-Route::group(['prefix' => $prefixAdmin,'namespace' =>'Admin'], function() {
+Route::group(['prefix' => $prefixAdmin,'namespace' =>'Admin','middleware' =>'permission.admin'], function() {
     //====================================== DASHBOARD ========================================
     $prefix = 'dashboard';
     $controllerName = 'dashboard';
@@ -107,5 +107,21 @@ Route::group(['prefix' => $prefixNews, 'namespace'=>'News'], function() {
         ->where('article_id', '[0-9]+')
         ->where('article_name', '[a-zA-Z0-9_-]+');
     });
-    
+    //====================================== AUTH ===========================================
+    $prefix = '';
+    $controllerName = 'auth';
+    Route::group(['prefix' => $prefix], function () use ($controllerName) {
+        $controller = ucfirst($controllerName) . 'Controller@';
+        Route::get('/login',         ['as' =>  $controllerName . '/login',  'uses' => $controller . 'login'])->middleware('check.login');
+        Route::post('/postlogin',    ['as' =>  $controllerName . '/postLogin',  'uses' => $controller . 'postLogin']);
+        Route::get('/logout',         ['as' =>  $controllerName . '/logout',  'uses' => $controller . 'logout']);
+    });
+    //====================================== NOTIFY ===========================================
+    $prefix = '';
+    $controllerName = 'notify';
+    Route::group(['prefix' => $prefix], function () use ($controllerName) {
+        $controller = ucfirst($controllerName) . 'Controller@';
+        Route::get('/no-permission',         ['as' =>  $controllerName . '/no-permission',  'uses' => $controller . 'index']);
+    });
+ 
 });

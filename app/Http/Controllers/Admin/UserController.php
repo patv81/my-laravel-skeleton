@@ -25,10 +25,7 @@ class UserController extends Controller
         $this->params['search']['value'] = $request->get('search_value','');
 
         $items = $this->model->listItems($this->params,['task'=> 'admin-list-items' ]);
-        // echo '<pre>' ;
-        // print_r($items->toArray()); 
-        // echo'</pre>';
-        
+
         $itemsStatusCount = $this->model->countItems($this->params,['task'=> 'admin-count-items-group-by-status']);
         return view($this->pathViewController.'index',[
             'items'=>$items,
@@ -80,9 +77,10 @@ class UserController extends Controller
     public function changePassword(MainRequest $request){
         if ($request->method() == 'POST'){
             $params = $request->all();
-            $task = 'chang-password';
+            $task = 'change-password';
             $notify ='cập nhật mật khẩu thành công';
             $this->model->saveItem($params, ['task' => $task]);
+
             return redirect()->route($this->controllerName)->with("zvn_notify", $notify);
         }
     }
