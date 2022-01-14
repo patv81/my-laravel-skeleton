@@ -10,7 +10,7 @@ use App\Models\ArticleModel ;
 class CategoryController extends Controller
 {
     private $pathViewController='news.pages.category.';
-    private $controllerName='home';
+    private $controllerName='category';
     private $model;
     private $params=[];
     public function __construct(){
@@ -29,7 +29,7 @@ class CategoryController extends Controller
 
         $itemsFeatured = $articlemodel->listItems(null,['task'=>'news-list-items-featured']);
         $itemsLatest = $articlemodel->listItems(null,['task'=>'news-list-items-latest']);
-        
+        dd($itemCategory->toArray());
         return view($this->pathViewController.'index',[
             'params'=>$this->params,
             'itemCategory' =>$itemCategory,

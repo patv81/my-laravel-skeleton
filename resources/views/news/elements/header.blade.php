@@ -17,16 +17,19 @@
                 $xhtml.=sprintf('<li %s><a href="%s">%s</a></li>',$active,$link,$val['name']);
                 $xhtmlMobile.=sprintf('<li %s class="menu_mm"><a href="%s">%s</a></li>',$active,$link,$val['name']);
             }
-        if (session('userInfo')){
-            $xhtml.=sprintf('<li %s><a href="%s">%s</a></li>','',route('auth/logout'),'Logout');
-            $xhtmlMobile= sprintf('<li %s class="menu_mm"><a href="%s">%s</a></li>','',route('auth/logout'),'Logout');    
-        }else{
-            $xhtml.=sprintf('<li %s><a href="%s">%s</a></li>','',route('auth/login'),'Login');
-            $xhtmlMobile= sprintf('<li %s class="menu_mm"><a href="%s">%s</a></li>','',route('auth/login'),'Login');
         }
-        $xhtml.='</ul></nav>';
-        $xhtmlMobile.='</ul></nav>';
+    $xhtml.=sprintf('<li %s><a href="%s">%s</a></li>','',route('rss/index'),'Tin tức tổng hợp');
+    $xhtmlMobile= sprintf('<li %s class="menu_mm"><a href="%s">%s</a></li>','',route('rss/index'),'Tin tức tổng hợp');
+
+    if (session('userInfo')){
+        $xhtml.=sprintf('<li %s><a href="%s">%s</a></li>','',route('auth/logout'),'Logout');
+        $xhtmlMobile= sprintf('<li %s class="menu_mm"><a href="%s">%s</a></li>','',route('auth/logout'),'Logout');    
+    }else{
+        $xhtml.=sprintf('<li %s><a href="%s">%s</a></li>','',route('auth/login'),'Login');
+        $xhtmlMobile= sprintf('<li %s class="menu_mm"><a href="%s">%s</a></li>','',route('auth/login'),'Login');
     }
+    $xhtml.='</ul></nav>';
+    $xhtmlMobile.='</ul></nav>';
 
 @endphp    
 

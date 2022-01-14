@@ -77,6 +77,19 @@ Route::group(['prefix' => $prefixAdmin,'namespace' =>'Admin','middleware' =>'per
         Route::post('change-password',               ['as' =>    $controllerName. '/change-password',     'uses' => $controller . 'changePassword']);
         Route::post('change-level',                  ['as' =>    $controllerName . '/change-level',     'uses' => $controller . 'changeLevel']);
     });
+    //====================================== RSS ===========================================
+    $prefix = 'rss';
+    $controllerName = 'rss';
+    Route::group(['prefix' => $prefix], function () use ($controllerName) {
+        $controller = ucfirst($controllerName) . 'Controller@';
+        Route::get('/',
+            ['as' =>    $controllerName,             'uses' => $controller . 'index']
+        );
+        Route::post('save',                      ['as' =>    $controllerName . '/save',     'uses' => $controller . 'save']);
+        Route::get('form/{id?}',                 ['as' =>    $controllerName . '/form',     'uses' => $controller . 'form']);
+        Route::get('delete/{id}',                ['as' =>    $controllerName . '/delete',   'uses' => $controller . 'delete']);
+        Route::get('change-status-{status}/{id}', ['as' =>    $controllerName . '/status',   'uses' => $controller . 'status'])->where('id', '[0-9]+');
+    });
 });
 
 
@@ -123,5 +136,11 @@ Route::group(['prefix' => $prefixNews, 'namespace'=>'News'], function() {
         $controller = ucfirst($controllerName) . 'Controller@';
         Route::get('/no-permission',         ['as' =>  $controllerName . '/no-permission',  'uses' => $controller . 'index']);
     });
- 
+    //====================================== RSS ===========================================
+    $prefix = 'tin-tuc-tong-hop';
+    $controllerName = 'rss';
+    Route::group(['prefix' => $prefix], function () use ($controllerName) {
+        $controller = ucfirst($controllerName) . 'Controller@';
+        Route::get('/',             ['as' =>     $controllerName.'/index',            'uses' => $controller . 'index']);;
+    });
 });

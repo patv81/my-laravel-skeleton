@@ -40,6 +40,11 @@ return [
             'feature'=>['name'=>'nổi bật'],
             'normal'=>['name'=>'bình thường'],
         ],
+        'rss_source'=>[
+            'tuoitre'=>['name'=>'Tuổi trẻ'],
+            'vnexpress'=>['name'=>'VNExpress'],
+            'thanhnien' =>['name'=>'Thanh niên'],
+        ],
         'search'=>[
             'all'           =>['name'=>'Search by All'],
             'id'            =>['name'=>'Search by Id'],
@@ -65,6 +70,7 @@ return [
             'category'    =>['all','id'],
             'article'    =>['all','name','content'],
             'user'    => ['all', 'username', 'email','level','fullname'],
+            'rss'    => ['all', 'name','link'],
         ],
         'button'=>[
             'slider'=>['delete','edit'],
@@ -72,6 +78,7 @@ return [
             'category'=>['delete','edit'],
             'article'=>['delete','edit'],
             'user' => ['delete', 'edit'],
+            'rss' => ['delete', 'edit'],
         ],
     ],
 ];
